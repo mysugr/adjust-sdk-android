@@ -1,7 +1,7 @@
 ## Summary
 
-This is the Android SDK of adjust.io™. You can read more about adjust.io™ at
-adjust.io.
+This is the Android SDK of adjust™. You can read more about adjust™ at
+adjust.com.
 
 ## Basic Installation
 
@@ -247,6 +247,8 @@ Every time your app tries to track a session, an event or some revenue, you can
 be notified about the success of that operation and receive additional
 information about the current install.
 
+Please make sure to consider [applicable attribution data policies.][attribution-data]
+
 The simplest way is to create a single anonymous listener for these notifications.
 
 - Open the source file of your main activity, find its `onResume` method and
@@ -353,8 +355,8 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-[adjust.io]:   http://adjust.io
-[dashboard]:   http://adjust.io
+[adjust.com]:   http://adjust.com
+[dashboard]:   http://adjust.com
 [releases]:    https://github.com/adjust/adjust_android_sdk/releases
 [project]:     https://raw.github.com/adjust/adjust_sdk/master/Resources/android/project.png
 [android]:     https://raw.github.com/adjust/adjust_sdk/master/Resources/android/android.png
@@ -367,14 +369,14 @@ protected void onCreate(Bundle savedInstanceState) {
 [activity]:    https://raw.github.com/adjust/adjust_sdk/master/Resources/android/activity4.png
 [log]:         https://raw.github.com/adjust/adjust_sdk/master/Resources/android/log4.png
 [referrer]:    doc/referrer.md
-
+[attribution-data]: https://github.com/adjust/sdks/blob/master/doc/attribution-data.md
 
 ## License
 
 The adjust SDK is licensed under the MIT License.
 
-Copyright (c) 2012-2013 adeven GmbH,
-http://www.adeven.com
+Copyright (c) 2012-2013 adjust GmbH,
+http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

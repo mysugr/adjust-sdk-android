@@ -3,7 +3,7 @@
 //  Adjust
 //
 //  Created by Christian Wellenbrock on 2012-10-11.
-//  Copyright (c) 2012-2013 adeven. All rights reserved.
+//  Copyright (c) 2012-2014 adjust GmbH. All rights reserved.
 //  See the file MIT-LICENSE for copying permission.
 //
 
@@ -349,15 +349,31 @@ public class Util {
         return dateFormat.format(date);
     }
 
-    public static String getGpsAdid(Context context) {
+    public static String getPlayAdId(Context context) {
         try {
-            Class AdvertisingIdClientClass = Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient");
+            Object AdvertisingInfoObject = getPlayAdvertisingInfoObject(context);
 
-            Class[] cArg = new Class[1];
-            cArg[0] = Context.class;
-            Method getAdvertisingInfoMethod = AdvertisingIdClientClass.getMethod("getAdvertisingIdInfo", cArg);
+            Class AdvertisingInfoClass = AdvertisingInfoObject.getClass();
 
-            Object AdvertisingInfoObject = getAdvertisingInfoMethod.invoke(null, context);
+            Method getIdMethod = AdvertisingInfoClass.getMethod("getId");
+
+            Object getIdObject = getIdMethod.invoke(AdvertisingInfoObject);
+
+            String playAdid = (String) getIdObject;
+
+            return playAdid;
+        }
+        catch (Exception e) {
+        }
+        catch (NoClassDefFoundError ncdffe) {
+        }
+
+        return null;
+    }
+
+    public static boolean isPlayTrackingEnabled(Context context) {
+        try {
+            Object AdvertisingInfoObject = getPlayAdvertisingInfoObject(context);
 
             Class AdvertisingInfoClass = AdvertisingInfoObject.getClass();
 
@@ -367,19 +383,25 @@ public class Util {
 
             Boolean isLimitedTrackingEnabled = (Boolean) isLimitedTrackingEnabledObject;
 
-            if (!isLimitedTrackingEnabled) {
-                Method getIdMethod = AdvertisingInfoClass.getMethod("getId");
-
-                Object getIdObject = getIdMethod.invoke(AdvertisingInfoObject);
-
-                String gpsAdid = (String) getIdObject;
-            }
+            return !isLimitedTrackingEnabled;
         }
         catch (Exception e) {
         }
         catch (NoClassDefFoundError ncdffe) {
         }
 
-        return null;
+        return false;
+    }
+
+    private static Object getPlayAdvertisingInfoObject(Context context) throws Exception {
+        Class AdvertisingIdClientClass = Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient");
+
+        Class[] cArg = new Class[1];
+        cArg[0] = Context.class;
+        Method getAdvertisingInfoMethod = AdvertisingIdClientClass.getMethod("getAdvertisingIdInfo", cArg);
+
+        Object AdvertisingInfoObject = getAdvertisingInfoMethod.invoke(null, context);
+
+        return AdvertisingInfoObject;
     }
 }
